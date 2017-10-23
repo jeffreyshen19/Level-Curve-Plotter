@@ -10,7 +10,7 @@ var notify = require('gulp-notify');
 gulp.task('default', ['webserver', 'sass', 'compressjs', 'imagemin', 'lint', 'compresspug'], function() {
   gulp.watch('src/SCSS/*.scss', ['sass']);
   gulp.watch('src/views/*.pug', ['compresspug']);
-  gulp.watch('src/*.js', ['compressjs']);
+  gulp.watch('src/JS/*.js', ['compressjs']);
 });
 
 gulp.task('compresspug', function buildHTML() {

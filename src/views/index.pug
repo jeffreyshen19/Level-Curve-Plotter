@@ -1,0 +1,57 @@
+extends includes/layout.pug
+
+block title
+  title Level Curve Plotter
+  
+block scripts
+  link(href = "/dist/CSS/main.css" rel = "stylesheet" type = "text/css")
+  script(src = "http://cdnjs.cloudflare.com/ajax/libs/mathjs/3.16.5/math.js")
+  script(src = "/dist/JS/level_curves-min.js")
+  
+block body
+  center#mobile-warning(hidden)
+    h1 Oops!
+    p This website doesn't work on mobile: Open it to a larger window size.
+  #wrapper.container-fluid(hidden)
+    image#loading(src = "/Assets/loading_apple.gif" hidden)
+    .row
+      #sidebar.col-md-3 
+        h3 Level Curve Plotter
+        p An online tool that plots level curves and calculates the partial derivatives for a 3D function. 
+        h4 How to use it
+        p Enter a function of <em>x</em> and <em>y</em> into the input below, select level curves to plot, and press "PLOT CURVES". Click on a specific point to calculate the partial derivatives there.
+        p#error 
+        #expressionwrapper
+          em f(x,y) = 
+          input#function(type = "text")
+        em Level curves to plot (seperate with commas):
+        #options
+          p z = 
+          input#levelcurves(type = "text")
+        button(onclick = "plotLevelCurves()") PLOT CURVES!
+        #partialderivatives(hidden)
+          h4 Partial Derivatives
+          p
+            em f<sub>x</sub> =&nbsp;
+            span#fx 
+          p
+            em f<sub>y</sub> =&nbsp;
+            span#fy 
+          p
+            em f<sub>xx</sub> =&nbsp;
+            span#fxx 
+          p
+            em f<sub>yy</sub> =&nbsp;
+            span#fyy 
+          p
+            em f<sub>xy</sub> =&nbsp;
+            span#fxy 
+        #credits 
+          br
+          em Created by Jeffrey Shen '19 and Alex Justicz '18 for Math 650
+      #graph.col-md-9(hidden)
+        p#tooltip
+        #zoomControl
+          i.fa.fa-fw.fa-search-plus#zoomIn(onclick = "zoomIn()")
+          i.fa.fa-fw.fa-search-minus#zoomOut(onclick = "zoomOut()")
+        canvas#graph-canvas

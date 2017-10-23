@@ -1,0 +1,49 @@
+$light-gray: #EEEEEE;
+$blue: #22A7F0;
+$red: #E74C3C;
+
+@font-face {
+  font-family: montserrat;
+  src: url("/Assets/Fonts/montserrat/Montserrat-Regular.ttf");
+}
+
+@font-face {
+  font-family: crimsontext;
+  src: url("/Assets/Fonts/crimsontext/CrimsonText-Regular.ttf");
+}
+
+@font-face {
+  font-family: crimsontext;
+  src: url("/Assets/Fonts/crimsontext/CrimsonText-Bold.ttf");
+  font-weight: bold;
+}
+
+@font-face {
+  font-family: crimsontext;
+  src: url("/Assets/Fonts/crimsontext/CrimsonText-Italic.ttf");
+  font-style: italic;
+}
+
+h1, h2, h3, h4, h5, h6, button{
+  font-family: montserrat;
+}
+
+p, strong, em, li, input{
+  font-family: crimsontext;
+}
+
+input{
+  border: none;
+}
+
+strong{
+  font-weight: bold;
+}
+
+em{
+  font-style: italic;
+}
+
+*:focus{
+  outline: none;
+}
