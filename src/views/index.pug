@@ -4,16 +4,16 @@ block title
   title Level Curve Plotter
   
 block scripts
-  link(href = "/dist/CSS/main.css" rel = "stylesheet" type = "text/css")
+  link(href = "./dist/CSS/main.css" rel = "stylesheet" type = "text/css")
   script(src = "http://cdnjs.cloudflare.com/ajax/libs/mathjs/3.16.5/math.js")
-  script(src = "/dist/JS/level_curves-min.js")
+  script(src = "./dist/JS/level_curves-min.js")
   
 block body
   center#mobile-warning(hidden)
     h1 Oops!
     p This website doesn't work on mobile: Open it to a larger window size.
   #wrapper.container-fluid(hidden)
-    image#loading(src = "/Assets/loading_apple.gif" hidden)
+    image#loading(src = "./Assets/loading_apple.gif" hidden)
     .row
       #sidebar.col-md-3 
         h3 Level Curve Plotter
