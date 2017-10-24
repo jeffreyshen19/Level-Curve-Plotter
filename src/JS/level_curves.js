@@ -55,11 +55,11 @@ $(document).ready(function(){
     var fyy = math.derivative(math.derivative(func, "y"), "y").eval({x: coords.x, y: coords.y});
     var fxy = math.derivative(math.derivative(func, "x"), "y").eval({x: coords.x, y: coords.y});
 
-    $("#fx").html(fx);
-    $("#fy").html(fy);
-    $("#fxx").html(fxx);
-    $("#fyy").html(fyy);
-    $("#fxy").html(fxy);
+    $("#fx").html(fx.toFixed(4));
+    $("#fy").html(fy.toFixed(4));
+    $("#fxx").html(fxx.toFixed(4));
+    $("#fyy").html(fyy.toFixed(4));
+    $("#fxy").html(fxy.toFixed(4));
 
     $("#partialderivatives").show();
   });
