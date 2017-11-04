@@ -110,7 +110,6 @@ function plotLevelCurves(){
   //Reset
   $("#error").html("");
   $("#partialderivatives").hide();
-  $("#graph").show();
   isGraph = true;
 
   //Make sure input is valid
@@ -193,15 +192,19 @@ function plotLevelCurves(){
     ctx.fillText("" + orderOfMagnitudeY, width / 2 + 10, height / 2 - scalingFactor * orderOfMagnitudeY + 5);
 
     //Plot each level curve
-    var level, pointFound, x, y, fx, fy, xCoords, yCoords, m;
+    var level, pointFound, x, y, fx, fy, xCoords, yCoords, m, lengthOfLine;
 
     ctx.font = "14px crimsontext";
+
+    var fxNode = math.derivative(func, "x");
+    var fyNode = math.derivative(func, "y");
 
     var levels = $("#levelcurves").val().split(",");
     for(var l = 0; l < levels.length; l++){
       level = levels[l];
       ctx.fillStyle = randomColor({luminosity: 'dark', format: 'hex'});
       ctx.strokeStyle = ctx.fillStyle;
+      ctx.lineWidth = 2;
       ctx.beginPath();
       pointFound = false;
 
@@ -217,17 +220,20 @@ function plotLevelCurves(){
               pointFound = true;
             }
 
-            fx = math.derivative(func, "x").eval({x: xCoords, y: yCoords});
-            fy = math.derivative(func, "y").eval({x: xCoords, y: yCoords});
+            fx = fxNode.eval({x: xCoords, y: yCoords});
+            fy = fyNode.eval({x: xCoords, y: yCoords});
+
+            lengthOfLine = Math.ceil(Math.abs(1 / m)) * 4;
 
             m = -1 * fx/fy;
 
-            console.log(m);
+            console.log(lengthOfLine);
 
-            yf = (height / 2 - y - m * (x - width / 2) / scalingFactor) / scalingFactor;
-
-            ctx.moveTo(x, y);
-            ctx.lineTo(x + 10, height / 2 - yf * scalingFactor);
+            if(!Number.isNaN(lengthOfLine)){
+              yf = m * (lengthOfLine / scalingFactor) + yCoords;
+              ctx.moveTo(x, y);
+              ctx.lineTo(x + lengthOfLine, height / 2 - yf * scalingFactor);
+            }
 
             plotPoint(ctx, x, y);
           }
@@ -239,5 +245,6 @@ function plotLevelCurves(){
     }
 
     $("#loading").hide();
+    $("#graph").show();
   }, 0);
 }
