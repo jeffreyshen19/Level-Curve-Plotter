@@ -21,11 +21,6 @@ function convertToRectCoords(x, y){
   return {x: mouseX /= scalingFactor, y: mouseY /= scalingFactor};
 }
 
-function generateHex(){
-  return '#' + (function co(lor){   return (lor +=
-  [0,1,2,3,4,5,6,7,8,9,'a','b','c','d','e','f'][Math.floor(Math.random()*16)]) && (lor.length == 6) ?  lor : co(lor); })('');
-}
-
 function sign(num){
   if(num <= 0) return 0;
   else if(num > 0) return 1;
@@ -198,20 +193,23 @@ function plotLevelCurves(){
     ctx.fillText("" + orderOfMagnitudeY, width / 2 + 10, height / 2 - scalingFactor * orderOfMagnitudeY + 5);
 
     //Plot each level curve
-    var level, pointFound, x, y, fx;
+    var level, pointFound, x, y, fx, fy, xCoords, yCoords, m;
 
     ctx.font = "14px crimsontext";
 
     var levels = $("#levelcurves").val().split(",");
     for(var l = 0; l < levels.length; l++){
       level = levels[l];
-      ctx.fillStyle = generateHex();
+      ctx.fillStyle = randomColor({luminosity: 'dark', format: 'hex'});
       ctx.strokeStyle = ctx.fillStyle;
+      ctx.beginPath();
       pointFound = false;
 
-      for(x = 0; x <= width; x += scalingFactor / 50){
-        for(y = 0; y <= height; y += scalingFactor / 50){
-          value = node.eval({x: (x - width / 2) / scalingFactor, y: (height / 2 - y) / scalingFactor});
+      for(x = 0; x <= width; x += 2){
+        for(y = 0; y <= height; y += 2){
+          xCoords = (x - width / 2) / scalingFactor;
+          yCoords = (height / 2 - y) / scalingFactor;
+          value = node.eval({x: xCoords, y: yCoords});
 
           if(Math.abs(value - level) <= 0.01) {
             if(!pointFound){
@@ -219,10 +217,24 @@ function plotLevelCurves(){
               pointFound = true;
             }
 
+            fx = math.derivative(func, "x").eval({x: xCoords, y: yCoords});
+            fy = math.derivative(func, "y").eval({x: xCoords, y: yCoords});
+
+            m = -1 * fx/fy;
+
+            console.log(m);
+
+            yf = (height / 2 - y - m * (x - width / 2) / scalingFactor) / scalingFactor;
+
+            ctx.moveTo(x, y);
+            ctx.lineTo(x + 10, height / 2 - yf * scalingFactor);
+
             plotPoint(ctx, x, y);
           }
         }
       }
+
+      ctx.stroke();
 
     }
 
