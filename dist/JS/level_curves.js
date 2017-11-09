@@ -223,19 +223,22 @@ function plotLevelCurves(){
             fx = fxNode.eval({x: xCoords, y: yCoords});
             fy = fyNode.eval({x: xCoords, y: yCoords});
 
-            lengthOfLine = Math.ceil(Math.abs(1 / m)) * 4;
+            lengthOfLine = 10;
+
+            //if(Math.abs(fy) < 0.8) lengthOfLine += 20;
 
             m = -1 * fx/fy;
 
-            console.log(lengthOfLine);
+            console.log(m);
 
-            if(!Number.isNaN(lengthOfLine)){
+            if(Math.abs(fy) > 0.8){
               yf = m * (lengthOfLine / scalingFactor) + yCoords;
               ctx.moveTo(x, y);
               ctx.lineTo(x + lengthOfLine, height / 2 - yf * scalingFactor);
             }
-
-            plotPoint(ctx, x, y);
+            else{
+              plotPoint(ctx, x, y);
+            }
           }
         }
       }
